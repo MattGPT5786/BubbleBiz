@@ -32,10 +32,15 @@
   .btn.ghost{background:transparent}
   @media (max-width:760px){.topnav{display:none}}
   /* ---------- hero ---------- */
-  .hero{position:relative;padding:38px 0 30px;background:
+  .hero{position:relative;padding:0 0 30px;background:
     radial-gradient(ellipse 55% 80% at 88% 0%,rgba(183,227,60,.16),transparent 60%),
     radial-gradient(ellipse 60% 90% at 0% 110%,rgba(20,110,180,.20),transparent 60%),
     linear-gradient(180deg,#0d1420,#0a0e13)}
+  .marquee{overflow:hidden;background:var(--ball);color:#16230a;padding:9px 0;margin-bottom:30px;
+    border-bottom:2px solid rgba(0,0,0,.25)}
+  .marquee .track{display:inline-flex;white-space:nowrap;animation:mq 20s linear infinite;will-change:transform}
+  .marquee .track span{font-size:14.5px;font-weight:800;letter-spacing:.05em;padding:0 14px}
+  @keyframes mq{from{transform:translateX(0)}to{transform:translateX(-50%)}}
   .hero .kick{display:inline-flex;align-items:center;gap:8px;background:rgba(232,58,48,.14);border:1px solid rgba(232,58,48,.5);
     color:#ff8d85;font-size:12px;font-weight:800;letter-spacing:.09em;text-transform:uppercase;padding:5px 12px;border-radius:999px}
   .hero .kick i{width:8px;height:8px;border-radius:50%;background:var(--red);display:inline-block}
@@ -155,7 +160,9 @@
   </div>
 </div></div>
 
-<div class="hero" id="top"><div class="wrap">
+<div class="hero" id="top">
+  <div class="marquee" aria-label="Sign up bonus announcement"><div class="track" id="mqTrack"></div></div>
+  <div class="wrap">
   <span class="kick"><i></i> Live every Wednesday · 7–9 PM</span>
   <h1>Wednesday night pickleball, <span class="hl">live from the bubble.</span></h1>
   <p class="lede">Every match from our 30-player crew, streamed live and on demand — plus lessons, commentary, and behind-the-scenes content straight from the players themselves.</p>
@@ -290,6 +297,13 @@
 </div>
 
 <script>
+  (function(){
+    var msg = "SIGN UP BONUS: Ed's Extraordinary Magic Show 🪄";
+    var half = "";
+    for (var k = 0; k < 6; k++) half += "<span>" + msg + " ✦</span>";
+    document.getElementById("mqTrack").innerHTML = half + half;
+  })();
+
   var tabGroups = { streaming:["live","replays"], players:["creators"], meet:["meet"], pricing:["pricing"] };
   var idToTab = { live:"streaming", replays:"streaming", creators:"players", meet:"meet", pricing:"pricing" };
   function setTab(t){
