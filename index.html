@@ -32,7 +32,7 @@
   .btn.ghost{background:transparent}
   @media (max-width:760px){.topnav{display:none}}
   /* ---------- hero ---------- */
-  .hero{position:relative;padding:64px 0 54px;background:
+  .hero{position:relative;padding:38px 0 30px;background:
     radial-gradient(ellipse 55% 80% at 88% 0%,rgba(183,227,60,.16),transparent 60%),
     radial-gradient(ellipse 60% 90% at 0% 110%,rgba(20,110,180,.20),transparent 60%),
     linear-gradient(180deg,#0d1420,#0a0e13)}
@@ -45,8 +45,16 @@
   .hero .cta{display:flex;gap:11px;margin-top:26px;flex-wrap:wrap}
   .btn.big{font-size:15.5px;padding:13px 24px;border-radius:10px}
   .hero .meta{margin-top:20px;color:var(--faint);font-size:13.5px;font-weight:600}
+  /* ---------- tab bar ---------- */
+  .tabbar{position:sticky;top:70px;z-index:15;display:flex;gap:6px;justify-content:center;flex-wrap:wrap;
+    background:rgba(16,22,30,.92);backdrop-filter:blur(10px);border:1px solid var(--line);border-radius:999px;
+    padding:6px;margin:22px auto 4px;width:fit-content;max-width:100%}
+  .tabbtn{appearance:none;border:0;background:transparent;color:var(--soft);font-family:var(--sans);
+    font-size:14.5px;font-weight:700;padding:9px 18px;border-radius:999px;cursor:pointer;white-space:nowrap}
+  .tabbtn:hover{color:var(--txt)}
+  .tabbtn.on{background:var(--ball);color:#1c2a08}
   /* ---------- sections ---------- */
-  section{padding:38px 0 6px}
+  section{padding:30px 0 6px}
   .sec-h{display:flex;align-items:baseline;gap:12px;margin-bottom:16px}
   .sec-h h2{margin:0;font-size:22px;font-weight:800}
   .sec-h .sub{color:var(--faint);font-size:13.5px;font-weight:600}
@@ -159,6 +167,13 @@
 </div></div>
 
 <div class="wrap">
+
+  <div class="tabbar" role="tablist">
+    <button class="tabbtn on" data-tab="streaming">📺 Streaming</button>
+    <button class="tabbtn" data-tab="players">🏓 Players</button>
+    <button class="tabbtn" data-tab="meet">🤝 Meet &amp; Greet</button>
+    <button class="tabbtn" data-tab="pricing">💲 Pricing</button>
+  </div>
 
   <section id="live">
     <div class="sec-h"><h2>Watch Live</h2><span class="sub">Every court, every match</span><span class="lock live">All-Access +</span></div>
@@ -275,6 +290,31 @@
 </div>
 
 <script>
+  var tabGroups = { streaming:["live","replays"], players:["creators"], meet:["meet"], pricing:["pricing"] };
+  var idToTab = { live:"streaming", replays:"streaming", creators:"players", meet:"meet", pricing:"pricing" };
+  function setTab(t){
+    Object.keys(tabGroups).forEach(function(k){
+      tabGroups[k].forEach(function(id){
+        var el = document.getElementById(id);
+        if (el) el.style.display = (k === t) ? "" : "none";
+      });
+    });
+    document.querySelectorAll(".tabbtn").forEach(function(b){
+      b.classList.toggle("on", b.getAttribute("data-tab") === t);
+    });
+  }
+  document.querySelectorAll(".tabbtn").forEach(function(b){
+    b.addEventListener("click", function(){ setTab(b.getAttribute("data-tab")); });
+  });
+  document.querySelectorAll('a[href^="#"]').forEach(function(a){
+    a.addEventListener("click", function(e){
+      var id = a.getAttribute("href").slice(1);
+      if (idToTab[id]) { e.preventDefault(); setTab(idToTab[id]); window.scrollTo({top:0, behavior:"smooth"}); }
+    });
+  });
+  var startHash = (location.hash || "").slice(1);
+  setTab(idToTab[startHash] || "streaming");
+
   var players = ["Andrew S.","Andrew V.","Brent","Bryan","Chaz","Chris","Dan","David D.","David R.","Drew","Eddie","Eli","Gene","Glen","Gus","Jonny","Kyle E.","Kyle J.","Matt","Mike","Mike K.","Patrick","Peter","Roy","Sean","Spencer","Steven","Tim F.","Tim M.","Todd"];
   var prices = [26,64,100,48,93,31,77,14,95,55,45,22,60,69,98,29,63,91,83,3,66,38,11,67,92,15,43,87,2,13];
   var colors = ["#b7e33c","#7fd4ff","#ffb37f","#ff9fb0","#c3a6ff","#8ff0d2","#ffe066","#a8c686"];
