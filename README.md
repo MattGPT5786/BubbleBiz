@@ -1,6 +1,6 @@
-# BubbleBiz
+# OnlyPickleFans
 
-Concept / mock business site for a pickleball group's paid content platform:
+Concept / mock business site for the OnlyPickleFans pickleball group's paid content platform:
 live Wednesday 7–9 PM match streams, on-demand replays, player creator channels,
 tiered subscriptions (Fan / All-Access / VIP) and a clubhouse meet & greet.
 
