@@ -3,154 +3,291 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>BubbleBiz — Pickleball, Under the Bubble</title>
+<title>BubbleBiz — Wednesday Night Pickleball, Live</title>
 <style>
   :root{
-    --ink:#0e2a47; --ink-soft:#3d5a76; --faint:#7d97ad;
-    --ball:#b7e33c; --ball-deep:#8fc31d; --sky:#eaf6fd; --card:#ffffff;
-    --line:#d7e7f2; --accent:#0e7fc4;
-    --sans:ui-rounded,"SF Pro Rounded","Segoe UI",system-ui,-apple-system,Arial,sans-serif;
+    --bg:#0a0e13; --bg2:#10161e; --panel:#151d27; --panel2:#1a2431; --line:#26313f;
+    --txt:#f2f5f8; --soft:#a7b4c0; --faint:#67778a;
+    --ball:#b7e33c; --ball-deep:#8fc31d; --red:#e83a30; --gold:#f5b93f;
+    --sans:"Segoe UI",system-ui,-apple-system,Helvetica,Arial,sans-serif;
   }
   *{box-sizing:border-box}
   html{scroll-behavior:smooth}
-  body{margin:0;font-family:var(--sans);color:var(--ink);-webkit-font-smoothing:antialiased;
-    background:
-      radial-gradient(ellipse 60% 34% at 85% -6%,rgba(183,227,60,.20),transparent 60%),
-      radial-gradient(ellipse 55% 40% at -10% 30%,rgba(14,127,196,.12),transparent 60%),
-      linear-gradient(180deg,#dff2fc 0%,#eef8fd 34%,#f7fcff 100%);
-    min-height:100vh}
-  /* floating bubbles */
-  .bubbles{position:fixed;inset:0;overflow:hidden;pointer-events:none;z-index:0}
-  .bubbles i{position:absolute;border-radius:50%;
-    background:radial-gradient(circle at 32% 30%,rgba(255,255,255,.95),rgba(255,255,255,.25) 42%,rgba(160,215,245,.18) 68%,rgba(120,195,235,.28));
-    box-shadow:inset 0 0 12px rgba(255,255,255,.5),0 4px 14px rgba(14,90,140,.08)}
-  .wrap{position:relative;z-index:1;max-width:1020px;margin:0 auto;padding:0 20px 56px}
+  body{margin:0;background:var(--bg);color:var(--txt);font-family:var(--sans);-webkit-font-smoothing:antialiased}
+  a{color:inherit}
+  .wrap{max-width:1180px;margin:0 auto;padding:0 20px}
+  /* ---------- top bar ---------- */
+  .topbar{position:sticky;top:0;z-index:20;background:rgba(10,14,19,.88);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+  .topbar .wrap{display:flex;align-items:center;gap:26px;height:62px}
+  .logo{font-size:23px;font-weight:800;letter-spacing:-.01em;text-decoration:none;white-space:nowrap}
+  .logo .z{color:var(--ball)}
+  .logo .dot{display:inline-block;width:9px;height:9px;border-radius:50%;background:var(--ball);margin:0 1px 1px 3px}
+  .topnav{display:flex;gap:20px;flex:1}
+  .topnav a{text-decoration:none;color:var(--soft);font-size:14.5px;font-weight:600}
+  .topnav a:hover{color:var(--txt)}
+  .topbtns{display:flex;gap:9px;align-items:center}
+  .btn{display:inline-block;text-decoration:none;font-weight:700;font-size:14px;border-radius:8px;padding:9px 16px;border:1px solid var(--line);background:var(--panel2);color:var(--txt);cursor:pointer}
+  .btn.primary{background:var(--ball);border-color:var(--ball);color:#1c2a08}
+  .btn.primary:hover{background:#c6ef5e}
+  .btn.ghost{background:transparent}
+  @media (max-width:760px){.topnav{display:none}}
   /* ---------- hero ---------- */
-  header{padding:52px 0 8px;text-align:center}
-  .ball{display:inline-block;width:74px;height:74px;border-radius:50%;position:relative;
-    background:radial-gradient(circle at 34% 30%,#dcff7a,#b7e33c 55%,#93c51f);
-    box-shadow:inset -8px -10px 18px rgba(90,130,10,.35),inset 4px 6px 12px rgba(255,255,255,.55),0 12px 26px rgba(110,160,20,.35)}
-  .ball::after{content:"";position:absolute;inset:9px;border-radius:50%;
-    background-image:radial-gradient(rgba(70,100,10,.35) 2.1px, transparent 2.6px);background-size:13px 13px;background-position:2px 3px}
-  h1{margin:16px 0 4px;font-size:clamp(44px,8vw,76px);font-weight:800;letter-spacing:-.01em;line-height:1}
-  h1 .b2{color:var(--accent)}
-  .tagline{font-size:clamp(16px,2.6vw,21px);color:var(--ink-soft);font-weight:600;margin:0}
-  .tagline em{font-style:normal;color:var(--ball-deep)}
-  nav{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin:26px 0 6px}
-  nav a{text-decoration:none;color:var(--ink);font-weight:700;font-size:14.5px;background:var(--card);
-    border:1px solid var(--line);border-radius:999px;padding:9px 16px;box-shadow:0 3px 10px rgba(14,90,140,.08)}
-  nav a:hover{border-color:var(--ball-deep);color:var(--ball-deep)}
+  .hero{position:relative;padding:64px 0 54px;background:
+    radial-gradient(ellipse 55% 80% at 88% 0%,rgba(183,227,60,.16),transparent 60%),
+    radial-gradient(ellipse 60% 90% at 0% 110%,rgba(20,110,180,.20),transparent 60%),
+    linear-gradient(180deg,#0d1420,#0a0e13)}
+  .hero .kick{display:inline-flex;align-items:center;gap:8px;background:rgba(232,58,48,.14);border:1px solid rgba(232,58,48,.5);
+    color:#ff8d85;font-size:12px;font-weight:800;letter-spacing:.09em;text-transform:uppercase;padding:5px 12px;border-radius:999px}
+  .hero .kick i{width:8px;height:8px;border-radius:50%;background:var(--red);display:inline-block}
+  .hero h1{margin:18px 0 10px;font-size:clamp(38px,6vw,62px);line-height:1.04;font-weight:800;letter-spacing:-.015em;max-width:15ch}
+  .hero h1 .hl{color:var(--ball)}
+  .hero p.lede{margin:0;color:var(--soft);font-size:clamp(15.5px,2.2vw,18.5px);line-height:1.55;max-width:56ch}
+  .hero .cta{display:flex;gap:11px;margin-top:26px;flex-wrap:wrap}
+  .btn.big{font-size:15.5px;padding:13px 24px;border-radius:10px}
+  .hero .meta{margin-top:20px;color:var(--faint);font-size:13.5px;font-weight:600}
   /* ---------- sections ---------- */
-  section{margin-top:34px}
-  .sec-h{display:flex;align-items:center;gap:10px;margin:0 2px 12px}
-  .sec-h .ic{font-size:22px}
-  .sec-h h2{margin:0;font-size:21px;font-weight:800;letter-spacing:.01em}
-  .sec-h .rule{flex:1;height:2px;border-radius:2px;background:linear-gradient(90deg,var(--line),transparent)}
-  .cards{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
-  @media (max-width:820px){.cards{grid-template-columns:1fr}}
-  .card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:18px;
-    box-shadow:0 8px 22px rgba(14,90,140,.08)}
-  .card h3{margin:0 0 6px;font-size:16.5px;font-weight:800}
-  .card p{margin:0;color:var(--ink-soft);font-size:14.5px;line-height:1.55}
-  .card .big{font-size:26px;font-weight:800;color:var(--ink);line-height:1.2}
-  .card .sub{color:var(--faint);font-size:13px;font-weight:600;margin-top:2px}
-  .pill{display:inline-block;background:#f0f9d8;color:#5d7d10;border:1px solid #d9eda6;
-    font-size:11.5px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;
-    padding:3px 9px;border-radius:999px;margin-bottom:9px}
-  ul.rules{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:1fr 1fr;gap:12px 26px}
-  @media (max-width:820px){ul.rules{grid-template-columns:1fr}}
-  ul.rules li{display:flex;gap:11px;align-items:flex-start;background:var(--card);border:1px solid var(--line);
-    border-radius:14px;padding:13px 15px;box-shadow:0 5px 14px rgba(14,90,140,.06)}
-  ul.rules .n{flex:0 0 auto;width:26px;height:26px;border-radius:50%;background:var(--ball);color:#3d5a10;
-    font-weight:800;font-size:13.5px;display:flex;align-items:center;justify-content:center;margin-top:1px}
-  ul.rules b{display:block;font-size:14.5px}
-  ul.rules span{color:var(--ink-soft);font-size:13.5px;line-height:1.45}
-  .notice{display:flex;gap:13px;align-items:flex-start}
-  .notice .pin{font-size:22px}
-  footer{margin-top:44px;text-align:center;color:var(--faint);font-size:13px;font-weight:600}
-  footer .ball-sm{display:inline-block;width:13px;height:13px;border-radius:50%;background:var(--ball);vertical-align:-1px;margin:0 3px}
+  section{padding:38px 0 6px}
+  .sec-h{display:flex;align-items:baseline;gap:12px;margin-bottom:16px}
+  .sec-h h2{margin:0;font-size:22px;font-weight:800}
+  .sec-h .sub{color:var(--faint);font-size:13.5px;font-weight:600}
+  .sec-h .lock{margin-left:auto;font-size:11.5px;font-weight:800;letter-spacing:.07em;text-transform:uppercase;color:var(--gold);
+    border:1px solid rgba(245,185,63,.45);background:rgba(245,185,63,.09);padding:4px 10px;border-radius:999px;white-space:nowrap}
+  .sec-h .lock.live{color:#ff8d85;border-color:rgba(232,58,48,.5);background:rgba(232,58,48,.10)}
+  .sec-h .lock.fan{color:#9fd0ff;border-color:rgba(90,160,230,.45);background:rgba(90,160,230,.10)}
+  /* ---------- video mock ---------- */
+  .player{background:#000;border:1px solid var(--line);border-radius:16px;overflow:hidden}
+  .screen{position:relative;aspect-ratio:16/7.6;background:
+    radial-gradient(ellipse 70% 90% at 50% 115%,rgba(183,227,60,.13),transparent 60%),
+    linear-gradient(180deg,#131c28,#090d12);display:flex;align-items:center;justify-content:center}
+  @media (max-width:760px){.screen{aspect-ratio:16/10}}
+  .screen .livebadge{position:absolute;top:14px;left:14px;background:var(--red);color:#fff;font-size:12px;font-weight:800;
+    letter-spacing:.08em;padding:5px 11px;border-radius:6px;display:flex;gap:7px;align-items:center}
+  .screen .livebadge i{width:7px;height:7px;background:#fff;border-radius:50%}
+  .screen .courtname{position:absolute;top:14px;right:14px;color:var(--soft);font-size:12.5px;font-weight:700;
+    background:rgba(0,0,0,.45);border:1px solid var(--line);padding:5px 11px;border-radius:6px}
+  .playbtn{width:82px;height:82px;border-radius:50%;background:rgba(183,227,60,.94);display:flex;align-items:center;justify-content:center;
+    box-shadow:0 14px 36px rgba(143,195,29,.4);cursor:pointer}
+  .playbtn::after{content:"";border-left:26px solid #16230a;border-top:16px solid transparent;border-bottom:16px solid transparent;margin-left:7px}
+  .screen .nextup{position:absolute;bottom:16px;left:0;right:0;text-align:center;color:var(--soft);font-size:14px;font-weight:600}
+  .screen .nextup b{color:var(--txt)}
+  .courts{display:grid;grid-template-columns:repeat(4,1fr);gap:11px;margin-top:11px}
+  @media (max-width:760px){.courts{grid-template-columns:repeat(2,1fr)}}
+  .court{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:13px 15px;cursor:pointer}
+  .court.on{border-color:var(--ball);background:var(--panel2)}
+  .court b{font-size:14.5px;display:block}
+  .court span{color:var(--faint);font-size:12.5px;font-weight:600}
+  .court .dotlive{color:#ff8d85;font-weight:800;font-size:11px;letter-spacing:.07em}
+  /* ---------- replay cards ---------- */
+  .grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+  @media (max-width:980px){.grid{grid-template-columns:repeat(2,1fr)}}
+  @media (max-width:540px){.grid{grid-template-columns:1fr}}
+  .rcard{background:var(--panel);border:1px solid var(--line);border-radius:14px;overflow:hidden}
+  .thumb{position:relative;aspect-ratio:16/9;background:linear-gradient(135deg,#1b2836,#0e141c)}
+  .thumb::after{content:"▶";position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
+    color:rgba(255,255,255,.85);font-size:26px;text-shadow:0 4px 14px rgba(0,0,0,.6)}
+  .thumb .dur{position:absolute;bottom:8px;right:8px;background:rgba(0,0,0,.72);color:#fff;font-size:11.5px;font-weight:700;
+    padding:2.5px 7px;border-radius:5px;z-index:1}
+  .thumb .tier{position:absolute;top:8px;left:8px;background:rgba(0,0,0,.72);color:#9fd0ff;font-size:10.5px;font-weight:800;
+    letter-spacing:.06em;padding:3px 8px;border-radius:5px;z-index:1;text-transform:uppercase}
+  .rcard .body{padding:12px 14px 14px}
+  .rcard h3{margin:0 0 3px;font-size:15px;font-weight:700}
+  .rcard p{margin:0;color:var(--faint);font-size:12.5px;font-weight:600}
+  /* ---------- creators ---------- */
+  .cgrid{display:grid;grid-template-columns:repeat(5,1fr);gap:13px}
+  @media (max-width:980px){.cgrid{grid-template-columns:repeat(3,1fr)}}
+  @media (max-width:560px){.cgrid{grid-template-columns:repeat(2,1fr)}}
+  .ccard{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:17px 14px 14px;text-align:center}
+  .avatar{width:58px;height:58px;border-radius:50%;margin:0 auto 10px;display:flex;align-items:center;justify-content:center;
+    font-size:19px;font-weight:800;color:#10161e}
+  .ccard h3{margin:0 0 2px;font-size:15.5px;font-weight:700}
+  .ccard p{margin:0;color:var(--faint);font-size:12px;font-weight:600;line-height:1.45}
+  .ccard .vchip{display:inline-block;margin-top:9px;font-size:12px;font-weight:800;letter-spacing:.02em;color:var(--ball);
+    border:1px solid rgba(183,227,60,.5);background:rgba(183,227,60,.08);padding:3.5px 10px;border-radius:999px}
+  /* ---------- meet & greet ---------- */
+  .mg{display:grid;grid-template-columns:1.25fr 1fr;gap:14px}
+  @media (max-width:820px){.mg{grid-template-columns:1fr}}
+  .mg .card{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:22px}
+  .mg h3{margin:0 0 8px;font-size:19px;font-weight:800}
+  .mg p{margin:0;color:var(--soft);font-size:14.5px;line-height:1.6}
+  .mg ul{margin:12px 0 0;padding:0;list-style:none}
+  .mg li{padding:7px 0;border-top:1px dashed var(--line);color:var(--soft);font-size:14px}
+  .mg li b{color:var(--txt)}
+  /* ---------- pricing ---------- */
+  .tiers{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;align-items:stretch}
+  @media (max-width:820px){.tiers{grid-template-columns:1fr}}
+  .tier{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:24px 22px;display:flex;flex-direction:column}
+  .tier.hot{border-color:var(--ball);background:linear-gradient(180deg,rgba(183,227,60,.07),var(--panel) 55%);position:relative}
+  .tier .pop{position:absolute;top:-11px;left:50%;transform:translateX(-50%);background:var(--ball);color:#1c2a08;
+    font-size:11px;font-weight:800;letter-spacing:.07em;text-transform:uppercase;padding:4px 12px;border-radius:999px;white-space:nowrap}
+  .tier h3{margin:0;font-size:16px;font-weight:800;letter-spacing:.02em}
+  .tier .price{margin:10px 0 2px;font-size:38px;font-weight:800}
+  .tier .price span{font-size:14px;color:var(--faint);font-weight:600}
+  .tier .blurb{color:var(--soft);font-size:13.5px;margin:0 0 14px}
+  .tier ul{list-style:none;margin:0 0 20px;padding:0;flex:1}
+  .tier li{padding:6.5px 0 6.5px 24px;position:relative;color:var(--soft);font-size:14px;border-top:1px dashed var(--line)}
+  .tier li::before{content:"✓";position:absolute;left:2px;color:var(--ball);font-weight:800}
+  .tier li.no{color:var(--faint)}
+  .tier li.no::before{content:"—";color:var(--faint)}
+  .tier .btn{text-align:center}
+  /* ---------- footer ---------- */
+  footer{margin-top:52px;border-top:1px solid var(--line);padding:24px 0 34px;color:var(--faint);font-size:12.5px;line-height:1.6}
+  footer .mock{display:inline-block;border:1px solid var(--line);border-radius:6px;padding:2px 8px;font-weight:700;color:var(--soft);margin-bottom:8px}
 </style>
 </head>
 <body>
-<div class="bubbles" aria-hidden="true">
-  <i style="width:120px;height:120px;left:6%;top:12%"></i>
-  <i style="width:52px;height:52px;left:14%;top:56%"></i>
-  <i style="width:84px;height:84px;right:8%;top:20%"></i>
-  <i style="width:38px;height:38px;right:17%;top:64%"></i>
-  <i style="width:64px;height:64px;left:44%;top:88%"></i>
-  <i style="width:30px;height:30px;right:38%;top:6%"></i>
-</div>
+
+<div class="topbar"><div class="wrap">
+  <a class="logo" href="#top">Bubble<span class="z">Biz</span><span class="dot"></span></a>
+  <nav class="topnav">
+    <a href="#live">Watch Live</a><a href="#replays">Replays</a><a href="#creators">Creators</a><a href="#meet">Meet &amp; Greet</a><a href="#pricing">Pricing</a>
+  </nav>
+  <div class="topbtns">
+    <a class="btn ghost" href="#pricing">Sign in</a>
+    <a class="btn primary" href="#pricing">Join</a>
+  </div>
+</div></div>
+
+<div class="hero" id="top"><div class="wrap">
+  <span class="kick"><i></i> Live every Wednesday · 7–9 PM</span>
+  <h1>Wednesday night pickleball, <span class="hl">live from the bubble.</span></h1>
+  <p class="lede">Every match from our 30-player crew, streamed live and on demand — plus lessons, commentary, and behind-the-scenes content straight from the players themselves.</p>
+  <div class="cta">
+    <a class="btn primary big" href="#live">▶ Watch Live</a>
+    <a class="btn big" href="#pricing">See Plans</a>
+  </div>
+  <div class="meta">Next session: Wednesday, Nov 18 · 7:00–9:00 PM ET · All courts, all matches</div>
+</div></div>
+
 <div class="wrap">
-  <header>
-    <span class="ball" aria-hidden="true"></span>
-    <h1>Bubble<span class="b2">Biz</span></h1>
-    <p class="tagline">Pickleball social play — <em>rain or shine, we're under the bubble.</em></p>
-    <nav>
-      <a href="#play">🏓 When We Play</a>
-      <a href="#crew">👥 The Crew</a>
-      <a href="#rules">📋 House Rules</a>
-      <a href="#news">📣 Announcements</a>
-    </nav>
-  </header>
 
-  <section id="play">
-    <div class="sec-h"><span class="ic">🏓</span><h2>When We Play</h2><span class="rule"></span></div>
-    <div class="cards">
+  <section id="live">
+    <div class="sec-h"><h2>Watch Live</h2><span class="sub">Every court, every match</span><span class="lock live">All-Access +</span></div>
+    <div class="player">
+      <div class="screen">
+        <span class="livebadge"><i></i>LIVE</span>
+        <span class="courtname">Court 1 · Main Feed</span>
+        <div class="playbtn" title="Play (mock)"></div>
+        <div class="nextup">Streaming <b>Wednesdays 7:00–9:00 PM ET</b> — coverage starts at 6:45</div>
+      </div>
+    </div>
+    <div class="courts">
+      <div class="court on"><b>Court 1</b><span class="dotlive">● LIVE</span> <span>· featured matches</span></div>
+      <div class="court"><b>Court 2</b><span class="dotlive">● LIVE</span> <span>· rotation games</span></div>
+      <div class="court"><b>Court 3</b><span class="dotlive">● LIVE</span> <span>· rotation games</span></div>
+      <div class="court"><b>Court 4</b><span class="dotlive">● LIVE</span> <span>· rotation games</span></div>
+    </div>
+  </section>
+
+  <section id="replays">
+    <div class="sec-h"><h2>Match Replays</h2><span class="sub">Full sessions, on demand</span><span class="lock fan">Fan +</span></div>
+    <div class="grid">
+      <div class="rcard"><div class="thumb"><span class="tier">Fan</span><span class="dur">2:04:18</span></div><div class="body"><h3>Wednesday Night — Full Session</h3><p>Wed, Nov 11 · All courts</p></div></div>
+      <div class="rcard"><div class="thumb"><span class="tier">Fan</span><span class="dur">38:42</span></div><div class="body"><h3>Court 1 Highlights</h3><p>Wed, Nov 11 · Best rallies</p></div></div>
+      <div class="rcard"><div class="thumb"><span class="tier">Fan</span><span class="dur">2:01:55</span></div><div class="body"><h3>Wednesday Night — Full Session</h3><p>Wed, Nov 4 · All courts</p></div></div>
+      <div class="rcard"><div class="thumb"><span class="tier">Fan</span><span class="dur">2:03:31</span></div><div class="body"><h3>Wednesday Night — Full Session</h3><p>Wed, Oct 28 · All courts</p></div></div>
+      <div class="rcard"><div class="thumb"><span class="tier">Fan</span><span class="dur">41:07</span></div><div class="body"><h3>Court 2 Highlights</h3><p>Wed, Oct 28 · Best rallies</p></div></div>
+      <div class="rcard"><div class="thumb"><span class="tier">Fan</span><span class="dur">1:58:44</span></div><div class="body"><h3>Wednesday Night — Full Session</h3><p>Wed, Oct 21 · All courts</p></div></div>
+      <div class="rcard"><div class="thumb"><span class="tier">Fan</span><span class="dur">35:19</span></div><div class="body"><h3>Top 25 Rallies of October</h3><p>Compilation · All courts</p></div></div>
+      <div class="rcard"><div class="thumb"><span class="tier">Fan</span><span class="dur">2:02:26</span></div><div class="body"><h3>Season Opener — Full Session</h3><p>Wed, Oct 14 · All courts</p></div></div>
+    </div>
+  </section>
+
+  <section id="creators">
+    <div class="sec-h"><h2>Creators</h2><span class="sub">Every player runs their own channel — and sets their own price</span><span class="lock">Or all of them with VIP</span></div>
+    <div class="cgrid" id="cgrid"></div>
+  </section>
+
+  <section id="meet">
+    <div class="sec-h"><h2>Meet &amp; Greet</h2><span class="sub">At the clubhouse, after the matches</span><span class="lock">VIP included</span></div>
+    <div class="mg">
       <div class="card">
-        <span class="pill">Regular Run</span>
-        <div class="big">Wednesday Evenings</div>
-        <div class="sub">Our standing weekly session — details get pinned here as they're set.</div>
+        <h3>Hang with the crew 🏓</h3>
+        <p>When the last game wraps at 9, the night moves to the clubhouse. VIP members get in free — meet the players, talk strategy, and relive the rallies over drinks and apps.</p>
+        <ul>
+          <li><b>When:</b> Every Wednesday, 9:00 PM — right after the session</li>
+          <li><b>Where:</b> The clubhouse at the bubble</li>
+          <li><b>Who:</b> The full crew — all 30 players rotate through</li>
+        </ul>
       </div>
       <div class="card">
-        <h3>The Venue</h3>
-        <p>An indoor bubble facility — climate-controlled, no rainouts, no wind, no excuses. Court details and directions land here next.</p>
-      </div>
-      <div class="card">
-        <h3>Format</h3>
-        <p>Social rotation doubles. All levels welcome — we mix it up, keep games moving, and nobody sits for long.</p>
+        <h3>How it works</h3>
+        <p>Show your VIP membership at the door. Space is limited on big nights, so VIPs can reserve a spot from their account before Wednesday. First drink's on the house for new VIP members.</p>
+        <ul>
+          <li><b>Included with:</b> VIP plan</li>
+          <li><b>Guests:</b> One guest pass per month</li>
+        </ul>
       </div>
     </div>
   </section>
 
-  <section id="crew">
-    <div class="sec-h"><span class="ic">👥</span><h2>The Crew</h2><span class="rule"></span></div>
-    <div class="card">
-      <div class="notice">
-        <span class="pin">🧑‍🤝‍🧑</span>
-        <div>
-          <h3>Roster board — coming soon</h3>
-          <p>The full crew list drops here: names, nicknames, and who's bringing the post-game snacks. Send the roster and this board fills in.</p>
-        </div>
+  <section id="pricing">
+    <div class="sec-h"><h2>Pricing</h2><span class="sub">Pick your seat</span></div>
+    <div class="tiers">
+      <div class="tier">
+        <h3>FAN</h3>
+        <div class="price">$7.99<span> /month</span></div>
+        <p class="blurb">Catch up on every rally, on your schedule.</p>
+        <ul>
+          <li>Full match replays, on demand</li>
+          <li>Weekly highlight compilations</li>
+          <li class="no">Live Wednesday streams</li>
+          <li class="no">Creator content</li>
+          <li class="no">Clubhouse meet &amp; greet</li>
+        </ul>
+        <a class="btn" href="#pricing">Join Fan</a>
+      </div>
+      <div class="tier hot">
+        <span class="pop">Most Popular</span>
+        <h3>ALL-ACCESS</h3>
+        <div class="price">$14.99<span> /month</span></div>
+        <p class="blurb">The full Wednesday night experience, live.</p>
+        <ul>
+          <li>Everything in Fan</li>
+          <li>Watch live — every court, every Wednesday 7–9 PM</li>
+          <li>Live chat during matches</li>
+          <li class="no">Creator content</li>
+          <li class="no">Clubhouse meet &amp; greet</li>
+        </ul>
+        <a class="btn primary" href="#pricing">Join All-Access</a>
+      </div>
+      <div class="tier">
+        <h3>VIP</h3>
+        <div class="price">$24.99<span> /month</span></div>
+        <p class="blurb">Everything, plus the players themselves.</p>
+        <ul>
+          <li>Everything in All-Access</li>
+          <li>Every creator channel included (up to $100/mo each on their own)</li>
+          <li>Clubhouse meet &amp; greet every Wednesday</li>
+          <li>One guest pass per month</li>
+          <li>Early access to special events</li>
+        </ul>
+        <a class="btn" href="#pricing">Join VIP</a>
       </div>
     </div>
   </section>
 
-  <section id="rules">
-    <div class="sec-h"><span class="ic">📋</span><h2>House Rules</h2><span class="rule"></span></div>
-    <ul class="rules">
-      <li><span class="n">1</span><div><b>Four on, four off</b><span>When courts are full and players are waiting, games go to 11 and the whole court rotates.</span></div></li>
-      <li><span class="n">2</span><div><b>Winners stay — max two</b><span>Win twice in a row and you rotate out anyway. Everybody plays everybody.</span></div></li>
-      <li><span class="n">3</span><div><b>Call the score, loud</b><span>Full score before every serve: yours, theirs, and the server number. No silent serves.</span></div></li>
-      <li><span class="n">4</span><div><b>The kitchen is lava</b><span>No volleys from the no-volley zone. Toe on the line counts — we don't argue about it twice.</span></div></li>
-      <li><span class="n">5</span><div><b>Line calls belong to the receiving side</b><span>Their call stands. Too close to call? It's in. Replay beats debate.</span></div></li>
-      <li><span class="n">6</span><div><b>New faces get a warm welcome</b><span>First-timer in your game? Walk them through the rotation and give them one mulligan serve.</span></div></li>
-    </ul>
-  </section>
+  <footer>
+    <span class="mock">CONCEPT / MOCK SITE</span><br>
+    BubbleBiz is a concept demo — subscriptions, checkout, and video are placeholders; no real payments are taken.<br>
+    BubbleBiz · Wednesday nights under the bubble · See you at the clubhouse.
+  </footer>
 
-  <section id="news">
-    <div class="sec-h"><span class="ic">📣</span><h2>Announcements</h2><span class="rule"></span></div>
-    <div class="card">
-      <div class="notice">
-        <span class="pin">📌</span>
-        <div>
-          <h3>BubbleBiz HQ is live</h3>
-          <p>This is home base for the group — schedule, roster, rules, and results all land here. First order of business: pin down the regular session details and get the crew on the board.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <footer>BubbleBiz <span class="ball-sm"></span> see you under the dome</footer>
 </div>
+
+<script>
+  var players = ["Andrew S.","Andrew V.","Brent","Bryan","Chaz","Chris","Dan","David D.","David R.","Drew","Eddie","Eli","Gene","Glen","Gus","Jonny","Kyle E.","Kyle J.","Matt","Mike","Mike K.","Patrick","Peter","Roy","Sean","Spencer","Steven","Tim F.","Tim M.","Todd"];
+  var prices = [26,64,100,48,93,31,77,14,95,55,45,22,60,69,98,29,63,91,83,3,66,38,11,67,92,15,43,87,2,13];
+  var colors = ["#b7e33c","#7fd4ff","#ffb37f","#ff9fb0","#c3a6ff","#8ff0d2","#ffe066","#a8c686"];
+  var g = document.getElementById("cgrid");
+  players.forEach(function(name, i){
+    var parts = name.replace(/\.$/,"").split(" ");
+    var ini = parts.map(function(p){return p.charAt(0)}).join("").slice(0,2).toUpperCase();
+    var price = prices[i] === 0 ? "Free" : "$" + prices[i] + "/mo";
+    var d = document.createElement("div"); d.className = "ccard";
+    d.innerHTML = '<div class="avatar" style="background:' + colors[i % colors.length] + '">' + ini + '</div>' +
+      '<h3>' + name + '</h3><p>Creator channel<br>Lessons · commentary · vlogs</p><span class="vchip">' + price + '</span>';
+    g.appendChild(d);
+  });
+</script>
 </body>
 </html>
